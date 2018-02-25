@@ -1,0 +1,63 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.sonarqube'
+apply plugin: 'jacoco'
+
+group = 'xyz.sw-warehouse.tmpdir'
+version = '0.0.1'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('mysql:mysql-connector-java')
+	compile('io.springfox:springfox-swagger2:2.3.1')
+	compile('io.springfox:springfox-swagger-ui:2.3.1')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('com.h2database:h2')
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false 
+        html.enabled true 
+    }
+}
+check.dependsOn jacocoTestReport
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://dev.sw-warehouse.xyz:1590/"
+        property "sonar.login", "e94757ca1a62b0971f766e7bc1a9292647c11904"
+        property "sonar.projectName", "tmpdir/download"
+        property "sonar.projectKey", "tmpdir-download"
+        property "sonar.sources", "src/main"
+        property "sonar.tests", "src/test"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
+        property "sonar.gitlab.url", "https://dev.sw-warehouse.xyz:1744/"
+        property "sonar.gitlab.user_token", "jxHen5hae8mGtiSJunBW"
+        property " sonar.gitlab.project_id", "46"
+    }
+}
