@@ -12,7 +12,7 @@ RUN mkdir -p /app/bin /app/config /applog /storage \
 	&& chmod +x /docker-entrypoint.sh
 
 VOLUME ["/app/config", "/applog", "/storage"]
-EXPOSE 6001
+EXPOSE 3332
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
