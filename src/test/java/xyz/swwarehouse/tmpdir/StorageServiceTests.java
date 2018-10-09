@@ -14,10 +14,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javassist.NotFoundException;
 import xyz.swwarehouse.tmpdir.entity.FileInfo;
 import xyz.swwarehouse.tmpdir.repository.FileInfoRepository;
 import xyz.swwarehouse.tmpdir.service.StorageService;
