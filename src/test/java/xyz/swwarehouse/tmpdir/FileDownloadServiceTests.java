@@ -17,10 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javassist.NotFoundException;
 import xyz.swwarehouse.tmpdir.entity.FileInfo;
 import xyz.swwarehouse.tmpdir.repository.FileInfoRepository;
 import xyz.swwarehouse.tmpdir.service.FileDownloadService;
@@ -73,13 +73,13 @@ public class FileDownloadServiceTests {
 		FileInfo fileInfo = fileDownloadService.getFileInfo(INVAILD_FILE_INFO.getId());
 		assertNull(fileInfo);
 	}
-	
+
 	@Test
 	public void testIsExistsFileInfoInRemoteRepo() {
 		FileInfo targetFileInfo = FILE_INFOS[0];
 		assertTrue(fileDownloadService.isExistsFileInfoInRemoteRepo(targetFileInfo.getId()));
 	}
-	
+
 	@Test
 	public void testIsExistsFileInfoInRemoteRepoNotExists() {
 		assertFalse(fileDownloadService.isExistsFileInfoInRemoteRepo(INVAILD_FILE_INFO.getId()));
@@ -90,7 +90,7 @@ public class FileDownloadServiceTests {
 		FileInfo targetFileInfo = FILE_INFOS[0];
 		ByteArrayResource byteArrayResource = fileDownloadService.getByteArrayResource(targetFileInfo.getId());
 		ByteArrayResource expectedByteArrayResource = fileInfoUtil.getByteArrayResource(targetFileInfo.getId());
-		
+
 		assertEquals(expectedByteArrayResource.getFilename(), byteArrayResource.getFilename());
 		assertArrayEquals(expectedByteArrayResource.getByteArray(), byteArrayResource.getByteArray());
 	}
@@ -100,7 +100,7 @@ public class FileDownloadServiceTests {
 		FileInfo targetFileInfo = FILE_INFOS[1];
 		ByteArrayResource byteArrayResource = fileDownloadService.getByteArrayResource(targetFileInfo.getId());
 		ByteArrayResource expectedByteArrayResource = fileInfoUtil.getByteArrayResource(targetFileInfo.getId());
-		
+
 		assertEquals(expectedByteArrayResource.getFilename(), byteArrayResource.getFilename());
 		assertArrayEquals(expectedByteArrayResource.getByteArray(), byteArrayResource.getByteArray());
 	}
@@ -116,7 +116,7 @@ public class FileDownloadServiceTests {
 		FileInfo targetFileInfo = FILE_INFOS[0];
 		assertFalse(fileDownloadService.isExpiredFile(targetFileInfo));
 	}
-	
+
 	@Test
 	public void testIsExpiredFileExpired() {
 		assertTrue(fileDownloadService.isExpiredFile(EXPIRED_FILE_INFO));
