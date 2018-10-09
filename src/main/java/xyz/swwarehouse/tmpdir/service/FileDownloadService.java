@@ -43,9 +43,10 @@ public class FileDownloadService {
 	private FileInfo findFileInfoInRemoteRepo(String id) {
 		return fileRepository.findOne(id);
 	}
-	
+
 	public boolean isExistsFileInfoInRemoteRepo(String id) {
-		boolean isExists = fileRepository.exists(id);
+		FileInfo fileinfo = findFileInfoInRemoteRepo(id);
+		boolean isExists = fileinfo != null;
 		LOGGER.debug("Exists({}) file in remote repo using id({})", isExists, id);
 		return isExists;
 	}
@@ -83,10 +84,10 @@ public class FileDownloadService {
 		LOGGER.debug("Success create byte array resource({})", byteArrayResource);
 		return byteArrayResource;
 	}
-	
+
 	public boolean isExpiredFile(FileInfo fileInfo) {
 		Date curDate = new Date();
-		if(fileInfo.getExpireTime() < curDate.getTime()) {
+		if (fileInfo.getExpireTime() < curDate.getTime()) {
 			LOGGER.error("Expired file({}), Current Time({})", fileInfo, curDate);
 			return true;
 		}

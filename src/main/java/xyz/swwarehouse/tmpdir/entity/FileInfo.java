@@ -2,15 +2,15 @@ package xyz.swwarehouse.tmpdir.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
+@Document(collection = "fileinfos")
 public class FileInfo {
-	@Id
+	@Field("id")
 	private String id;
-	private long submissionTime;
-	private long expireTime;
+	private Date submissionTime;
+	private Date expireTime;
 
 	public String getId() {
 		return id;
@@ -20,24 +20,24 @@ public class FileInfo {
 		this.id = id;
 	}
 
-	public long getSubmissionTime() {
+	public Date getSubmissionTime() {
 		return submissionTime;
 	}
 
-	public void setSubmissionTime(long submissionTime) {
+	public void setSubmissionTime(Date submissionTime) {
 		this.submissionTime = submissionTime;
 	}
 
 	public long getExpireTime() {
-		return expireTime;
+		return expireTime.getTime();
 	}
 
-	public void setExpireTime(long expireTime) {
+	public void setExpireTime(Date expireTime) {
 		this.expireTime = expireTime;
 	}
 
 	@Override
 	public String toString() {
-		return "id: " + this.id + ", submisstionTime: " + new Date(this.submissionTime) + ", expireTime: " + new Date(this.expireTime);
+		return "id: " + this.id + ", submisstionTime: " + this.submissionTime + ", expireTime: " + this.expireTime;
 	}
 }
