@@ -20,7 +20,7 @@ apply plugin: 'eclipse'
 apply plugin: "jacoco"
 apply plugin: "org.sonarqube"
 
-group = 'xyz.sw-warehouse.tmpdir'
+group = 'xyz.sw2h.tmpdir'
 version = '0.0.1'
 sourceCompatibility = 1.8
 
@@ -48,7 +48,7 @@ check.dependsOn jacocoTestReport
 
 sonarqube {
     properties {
-        property "sonar.host.url", "https://dev.sw-warehouse.xyz:1590/"
+        property "sonar.host.url", "https://dev.sw2h.xyz:1590/"
         property "sonar.login", "e94757ca1a62b0971f766e7bc1a9292647c11904"
         property "sonar.projectName", "tmpdir/download"
         property "sonar.projectKey", "tmpdir-download"
